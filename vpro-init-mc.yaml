@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vprodb-init
+spec:
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox:latest
+        command: ["/bin/sh", "-c", "until nslookup vprocache01; do echo 'Waiting for vprodb'; sleep 2; done;"]
+      restartPolicy: OnFailure
